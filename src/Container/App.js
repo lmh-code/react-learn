@@ -5,6 +5,7 @@ import Parent from '../Component/Parent'
 function App() {
   return (
     <div className="App">
+      测试一下啊：
       {/* 生命周期使用 */}
       {/* <LifeRound /> */}
 
