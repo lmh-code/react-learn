@@ -1,10 +1,13 @@
 # react-learn
+
 学习react做demo演示使用
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1. react基本应用
+2. redux应用
+3. 案例
 
 ## Available Scripts
 
-In the project directory, you can run:
+在这个项目中你可以运行一下命令来运行项目:
 
 ### `npm start`
 
@@ -69,18 +72,22 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
 
-### component中的文件的作用
-1、LifeRound  演示的是生命周期
-2、Parent和Child  演示的是父子组件之间的传值和方法的控制
-3、IfElseMap  演示的是if...else...和map在jsx中的使用
-4、FormSubmit  演示的是form表单
+## Component中的文件的作用
 
-### react中的onClick和html中的onclick区别
-html中的onclick
-1、html中使用onclick是全局的，容易污染环境
-2、onclick属于一部的，存储在计算机内存中，定义的越多，内存消耗越大，性能越差
-3、对于使用onclick的DOM元素，如果要动态地从DOM树中删掉的话，需要把对应的时间处理器注销，假如忘了注销，就可能造成内存泄露，这样的bug很难被发现。
+1. LifeRound  演示的是生命周期
+2. Contact  演示的是父子组件之间的传值和方法的控制
+3. IfElseMap  演示的是if...else...和map在jsx中的使用
+4. FormSubmit  演示的是form表单
+5. Shopping  购物车案例
+6. Tab和NavLink  路由跳转演示
+
+## react中的onClick和html中的onclick区别
+### html中的onclick
+1. html中使用onclick是全局的，容易污染环境
+2. onclick属于一部的，存储在计算机内存中，定义的越多，内存消耗越大，性能越差
+3. 对于使用onclick的DOM元素，如果要动态地从DOM树中删掉的话，需要把对应的时间处理器注销，假如忘了注销，就可能造成内存泄露，这样的bug很难被发现。
 
 上面说的这些问题，在JSX中onClick都不存在。
-1、onClick挂载的每个函数，都可以控制在组件范围内，不会污染全局空间。
-2、我们在JSX中看到一个组件使用了onClick，但并没有产生直接使用onclick（注意是onclick不是onClick）的HTML，而是使用了事件委托（eventdelegation）的方式处理点击事件，无论有多少个onClick出现，其实最后都只在DOM树上添加了一个事件处理函数，挂在最顶层的DOM节点上。所有的点击事件都被这个事件处理函数捕获，然后根据具体组件分配给特定函数，使用事件委托的性能当然要比为每个onClick都挂载一个事件处理函数要高。
+
+1. onClick挂载的每个函数，都可以控制在组件范围内，不会污染全局空间。
+2. 我们在JSX中看到一个组件使用了onClick，但并没有产生直接使用onclick（注意是onclick不是onClick）的HTML，而是使用了事件委托（eventdelegation）的方式处理点击事件，无论有多少个onClick出现，其实最后都只在DOM树上添加了一个事件处理函数，挂在最顶层的DOM节点上。所有的点击事件都被这个事件处理函数捕获，然后根据具体组件分配给特定函数，使用事件委托的性能当然要比为每个onClick都挂载一个事件处理函数要高。
