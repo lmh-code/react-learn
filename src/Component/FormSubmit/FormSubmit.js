@@ -11,6 +11,7 @@ class FormSubmit extends Component {
       sex: '1',
       love: [],
       suggest: '',
+      cityId: '2',
 
       sexOptions: [
         { 
@@ -55,7 +56,30 @@ class FormSubmit extends Component {
           label: '打羽毛球',
           value: '6'
         }
+      ],
+      cityOptions: [
+        { 
+          id: 1,
+          label: '郑州',
+          value: '1'
+        },
+        {
+          id: 2,
+          label: '南阳',
+          value: '2'
+        },
+        { 
+          id: 3,
+          label: '新乡',
+          value: '3'
+        },
+        {
+          id: 4,
+          label: '开封',
+          value: '4'
+        }
       ]
+      
     }
   }
 
@@ -68,6 +92,10 @@ class FormSubmit extends Component {
       return <div key={item.id}>
                 <input type="checkbox" name="love" checked={this.state.love.includes(item.value)} value={item.value} onChange={this.inputChange.bind(this)}/><label htmlFor="love">{item.label}</label>
              </div>
+    })
+    
+    let cityDom = this.state.cityOptions.map((item, index, arr) => {
+      return <option key={item.id} value = {item.value}>{item.label}</option>
     })
     return (
       <div>
@@ -101,6 +129,14 @@ class FormSubmit extends Component {
         <div className="form-item">
           <label htmlFor="suggest" className="form-item-label">建议：</label>
           <textarea rows="3" name="suggest" placeholder='请输入建议' value={this.state.suggest} onChange={this.inputChange.bind(this)}></textarea>
+        </div>
+        
+        {/* 选择城市 */}
+        <div className="form-item">
+          <label htmlFor="suggest" className="form-item-label">选择城市：</label>
+          <select defaultValue={this.state.cityId} name="cityId" onChange={this.inputChange.bind(this)}>
+            {cityDom}
+          </select>
         </div>
 
         <button onClick={this.submitHandel.bind(this)}>提交</button>
@@ -148,7 +184,8 @@ class FormSubmit extends Component {
       age: this.state.age,
       sex: this.state.sex,
       love: this.state.love,
-      suggest: this.state.suggest
+      suggest: this.state.suggest,
+      cityId: this.state.cityId
     }
     console.log("_params:", _params)
   }

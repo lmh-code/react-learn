@@ -1,0 +1,15 @@
+.nav-link-wrap {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: #FD6400;
+}
+
+.nav-link-item {
+  padding: 10px 0;
+}
+
+.selected {
+  color: #FFF;
+}
