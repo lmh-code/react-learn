@@ -3,7 +3,7 @@
  * @version: 
  * @Author: liuminghao@benlai.com
  * @Date: 2019-08-22 16:37:49
- * @LastEditTime: 2019-08-23 14:12:15
+ * @LastEditTime: 2019-08-26 20:34:23
  */
 import utils from './utils'
 let localStorage = window.localStorage;
@@ -17,7 +17,7 @@ const set = (_key, _val) => {
     localStorage.setItem(_key, JSON.stringify(_val))
   } else if (_key && utils.isJson(_key) && !_val) {
     for (let objKey in _key) {
-      this.setItem(objKey, _key[objKey])
+      this.set(objKey, _key[objKey])
     }
   }
 }

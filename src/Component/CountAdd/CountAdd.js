@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import store from '../../StoreFlux/index'
+import './style.css'
 class CountAdd extends Component {
   constructor(props) {
     super(props);
@@ -10,9 +11,12 @@ class CountAdd extends Component {
   render() {
     return (
       <div>
-        计数器当前数据：{this.state.count}
+        <button className="btn-wrap"> - </button> {this.state.count} <button className="btn-wrap" onClick={this.doAddHandel.bind(this)}> + </button>
       </div>
     );
+  }
+  doAddHandel() {
+    store.emit("increment")
   }
 }
 
