@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom';
 
 import App from '../Container/App'
+import Login from '../Component/Login/Login'
 
 import Home from '../Component/Home/Home'
 import Tab from '../Component/Tab/Tab'
@@ -19,6 +20,8 @@ import NavLinkP from '../Component/NavLink/NavLinkP'
 import NavLinkC from '../Component/NavLink/NavLinkC'
 import NavLinkC1 from '../Component/NavLink/NavLinkC1'
 import NavLinkC2 from '../Component/NavLink/NavLinkC2'
+
+import UseMock from '../Component/UseMock/UseMock'
 
 let TabCom = () => {
   return (
@@ -52,6 +55,8 @@ let PageRouter = () => {
           <Route path='/tab' component={TabCom}></Route>
 
           <Route path='/navLink' component={NavLinkDom}/>
+          <Route path='/login' component={Login}/>
+          <Route path='/useMock' component={UseMock}/>
         </Switch>
       </App>
     </Router>

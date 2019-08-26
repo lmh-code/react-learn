@@ -1,5 +1,6 @@
 import axios from "axios";
-import {reqUrl} from './config';
+import config from './config';
+import localStorage from './localStorage'
 
 // 设置超时时间
 axios.defaults.timeout = 60000;
@@ -8,17 +9,25 @@ axios.defaults.withCredentials = true;
 
 /**
  * @description: 动态设置请求头
- * @param {type} 
+ * @param {type} 区分是 postRequestBody 还是 postRequestParams
+ * @param {_oParam} 其他参数，用于控制一些非正常现象  urlType： 1：登录接口   其它：正常接口
  * @return: 
  */
-const setHeaders = (_type) => {
+const setHeaders = (_type, _oParam) => {
+  let loginInfo = localStorage.get('loginInfo') || {}
   let headers = {}
   headers['device_type'] = 'web'
-  headers['version'] = '2.0.1'
+  headers['version'] = '1.0.0'
   if(_type === 'body') {
     headers['Content-Type'] = 'application/json;charset=UTF-8'
   }else {
     headers['Content-Type'] = 'application/x-www-form-urlencoded'
+  }
+
+  if(_oParam && _oParam.urlType && _oParam.urlType === 1) {
+    headers['Authorization'] = 'Basic d2ViOmQ4YmZjMzQwMWE3NTg5ZTc4NGIwNmJkZmdhMmFkMWM0ZQ=='
+  }else {
+    headers['Authorization'] = `${loginInfo.token_type} ${loginInfo.access_token}`
   }
   return headers
 }
@@ -88,34 +97,37 @@ axios.interceptors.response.use(
 
 /**
  * @description: RequestBody请求
- * @param {type} _url: 请求地址
- * @param {type} _params：请求参数
+ * @param {_url} 请求地址
+ * @param {_params} 请求参数
+ * @param {_oParam} 其他参数，用于控制一些非正常现象  urlType： 1：登录接口   其它：正常接口
  * @return: 
  */
-const postB = (_url, _params) => {
-  let baseUrl = reqUrl
+const post = (_url, _params, _oParam) => {
+  let baseUrl = config.reqUrl
   return axios({
     method: "post",
     url: `${baseUrl}${_url}`,
     data: formatParams(_params),
-    headers: setHeaders('body')
+    headers: setHeaders('body', _oParam)
   });
 };
 
 /**
  * @description: @RequsetParam请求
- * @param {type} _url: 请求地址
- * @param {type} _params：请求参数
+ * @param {_url} 请求地址
+ * @param {_params} 请求参数
+ * @param {_oParam} 其他参数，用于控制一些非正常现象  urlType： 1：登录接口   其它：正常接口
  * @return: 
  */
-const postP = (_url, _params) => {
-  let baseUrl = reqUrl
+const postP = (_url, _params={}, _oParam) => {
+  let baseUrl = config.reqUrl
   return axios({
     method: "post",
     url: `${baseUrl}${_url}`,
     data: formatParams(_params),
     transformRequest: [
       function(data) {
+        console.log("data:", data)
         let ret = "";
         for (let it in data) {
           ret += encodeURIComponent(it) + "=" + encodeURIComponent(data[it]) + "&";
@@ -123,7 +135,7 @@ const postP = (_url, _params) => {
         return ret;
       }
     ],
-    headers: setHeaders('params')
+    headers: setHeaders('params', _oParam)
   });
 };
 
@@ -132,16 +144,17 @@ const postP = (_url, _params) => {
  * @param {type} 
  * @return: 
  */
-const get = url => {
-  let baseUrl = reqUrl
-  return axios({
-    method: "get",
-    url: `${baseUrl}${url}`
-  });
+const get = (_url, _params={}, _oParam) => {
+  let baseUrl = config.reqUrl
+  let reqUrl = `${baseUrl}${_url}`
+  return axios.get(reqUrl, {
+    params: formatParams(_params),
+    headers: setHeaders('params', _oParam)
+  })
 };
 
 export default {
   get,
-  postB,
+  post,
   postP
 }

@@ -1,10 +1,10 @@
-let reqUrl = 'https://api-blx-test.benlai.com'
+let reqUrl = 'http://127.0.0.1'
 // test dev trunk
 if (window.location.host === '192.168.60.47:5555') {
   reqUrl = 'https://api-blx-test.benlai.com'
 }
 // 本地
-if (window.location.host === 'localhost:8087') {
+if (window.location.host === 'localhost:6565') {
   reqUrl = 'https://api-blx-test.benlai.com'
 }
 // 预发布环境

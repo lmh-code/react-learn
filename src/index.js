@@ -5,6 +5,9 @@ import './index.css';
 import Index from './router/index';
 import * as serviceWorker from './serviceWorker';
 
+import request from './Utils/request'
+React.Component.prototype.$http = request;
+
 ReactDOM.render(<Index />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
