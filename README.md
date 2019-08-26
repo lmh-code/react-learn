@@ -74,12 +74,16 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 
 ## Component中的文件的作用
 
+0. Utils文件夹定义了一些常用工具类
 1. LifeRound  演示的是生命周期
 2. Contact  演示的是父子组件之间的传值和方法的控制
 3. IfElseMap  演示的是if...else...和map在jsx中的使用
 4. FormSubmit  演示的是form表单
 5. Shopping  购物车案例
 6. Tab和NavLink  路由跳转演示
+7. UseMock  mock.js的使用   async...await...函数的使用  Promise.all()的使用
+8. Login  使用公司接口测试了一下自己二次封装的axios的使用（登录）
+
 
 ## react中的onClick和html中的onclick区别
 html中的onclick      
@@ -118,4 +122,169 @@ Promse.all在处理多个异步处理时非常有用，比如说一个页面上�
       console.log("Promise.all res:", res)
     }).catch(err=>{})
   }
+```
+### 2、Promise.race的使用
+解释：      
+顾名思义，Promse.race就是赛跑的意思，意思就是说，Promise.race([p1, p2, p3])里面哪个结果获得的快，就返回那个结果，不管结果本身是成功状态还是失败状态。      
+代码示例：      
+```
+  let p1 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve('success')
+    },1000)
+  })
+
+  let p2 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      reject('failed')
+    }, 500)
+  })
+
+  Promise.race([p1, p2]).then((result) => {
+    console.log(result)
+  }).catch((error) => {
+    console.log(error)  // 打开的是 'failed'
+  })
+```
+
+## 理解和使用Promise、generator和async
+### 1、promise来读取文件
+代码示例：      
+```
+  const fs = require('fs')
+  const readFile = (fileName) => {
+    return new Promise((resolve, reject) => {
+      fs.readFile(fileName, (err, data) => {
+        if(err) {
+          reject(err)
+        }else {
+          resolve(data)
+        }
+      })
+    })
+  }
+  // readFile('1.txt').then(res=>{
+  //   console.log(res.toString());
+  // })
+  // readFile('2.txt').then(res=>{
+  //   console.log(res.toString());
+  // })
+  // readFile('3.txt').then(res=>{
+  //   console.log(res.toString());
+  // })
+  // 或者
+  readFile('1.txt').then(res => {
+    console.log(res.toString());
+    return readFile('2.txt'); // 返回新的数据，然后输出
+  }).then(res => {
+    console.log(res.toString());
+    return readFile('3.txt'); // 返回新的数据，然后输出
+  }).then(res => {
+    console.log(res.toString())
+  })
+```
+输出正常，因为读取多个文件一般都会作为一个异步来处理，这样就不会阻塞程序的运行，把fs封装成一个Promise对象，然后在下面返回数据输出。
+### 2、generator函数读取文件
+代码示例：     
+```
+  const fs = require("fs");
+  const read = function(fileName){
+      return new Promise((resolve,reject)=>{
+          fs.readFile(fileName,(err,data)=>{
+              if (err) {
+                  reject(err);
+              } else{
+                  resolve(data);
+              }
+          });
+      });
+  };
+  function * show(){
+      yield read('1.txt');
+      yield read('2.txt');
+      yield read('3.txt');
+  }
+  const s = show();
+  s.next().value.then(res => {
+      console.log(res.toString());
+      return s.next().value;
+  }).then(res => {
+      console.log(res.toString());
+      return s.next().value;
+  }).then(res => {
+      console.log(res.toString());
+  });
+```
+依然用node运行即可，这种方式代码量又高了不少，和Promise方式特别像，只不过是把读取文件的信息放在了外面，在下面依次手动调用，特别麻烦。
+
+### 3、async函数读取文件
+代码示例：     
+```
+  const fs = require("fs");
+  const read = function(fileName){
+      return new Promise((resolve,reject)=>{
+          fs.readFile(fileName,(err,data)=>{
+              if (err) {
+                  reject(err);
+              } else{
+                  resolve(data);
+              }
+          });
+      });
+  };
+  async function readByAsync(){
+      let a1 = await read('1.txt');
+      let a2 = await read('2.txt');
+      let a3 = await read('3.txt');
+      console.log(a1.toString());
+      console.log(a2.toString());
+      console.log(a3.toString());
+  }
+  readByAsync();
+```
+这个函数和generator函数有些类似，从例子中可以看得出来，async函数在function前面有个async作为标识，意思就是异步函数，里面有个await搭配使用，每到await的地方就是程序需要等待执行后面的程序，语义化很强，下面总结一下**async函数的特点**：      
+1. 语义化强
+2. 里面的await只能在async函数中使用
+3. await后面的语句可以是promise对象、数字、字符串等
+4. async函数返回的是一个Promsie对象
+5. await语句后的Promise对象变成reject状态时，那么整个async函数会中断，后面的程序不会继续执行
+
+基于上面的async的特点，我们会用到异常捕获机制，学过java的都知道，java中有异常捕获try...catch...
+
+```
+try/catch/finally 语句用于处理代码中可能出现的错误信息。
+错误可能是语法错误，通常是程序员造成的编码错误或错别字。也 可能是拼写错误或语言中缺少的功能（可能由于浏览器差异）。
+try语句允许我们定义在执行时进行错误测试的代码块。
+catch 语句允许我们定义当 try 代码块发生错误时，所执行的代码块。
+finally 语句在 try 和 catch 之后无论有无异常都会执行。
+注意： catch 和 finally 语句都是可选的，但你在使用 try 语句时必须至少使用一个。
+提示： 当错误发生时， JavaScript 会停止执行，并生成一个错误信息。使用 throw 语句 来创建自定义消息(抛出异常)。如果你将 throw 和 try 、 catch一起使用，就可以控制程序输出的错误信息。
+```
+在async中的使用：
+```
+  const fs = require("fs");
+  const read = function(fileName){
+      return new Promise((resolve,reject)=>{
+          fs.readFile(fileName,(err,data)=>{
+              if (err) {
+                  reject(err);
+              } else{
+                  resolve(data);
+              }
+          });
+      });
+  };
+  async function readByAsync(){
+      try{
+          let a1 = await read('1.txt');
+          let a2 = await read('2.txt');
+          let a3 = await read('3.txt');
+      }catch(e){
+          //TODO handle the exception
+      }
+      console.log(a1);
+      console.log(a2);
+      console.log(a3);
+  }
+  readByAsync();
 ```

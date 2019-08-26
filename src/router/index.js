@@ -22,6 +22,7 @@ import NavLinkC1 from '../Component/NavLink/NavLinkC1'
 import NavLinkC2 from '../Component/NavLink/NavLinkC2'
 
 import UseMock from '../Component/UseMock/UseMock'
+import CountAdd from '../Component/CountAdd/CountAdd'
 
 let TabCom = () => {
   return (
@@ -57,6 +58,7 @@ let PageRouter = () => {
           <Route path='/navLink' component={NavLinkDom}/>
           <Route path='/login' component={Login}/>
           <Route path='/useMock' component={UseMock}/>
+          <Route path='/countAdd' component={CountAdd}/>
         </Switch>
       </App>
     </Router>

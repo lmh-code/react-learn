@@ -3,7 +3,7 @@
  * @version: 
  * @Author: liuminghao@benlai.com
  * @Date: 2019-08-14 11:08:18
- * @LastEditTime: 2019-08-14 17:07:29
+ * @LastEditTime: 2019-08-26 17:50:13
  */
 
 let eventProxy = {
@@ -18,7 +18,7 @@ let eventProxy = {
   },
   // 订阅者
   // ... reset模式   可接收多个参数  参数类型随意
-  $emitMayParam(eventStr, ..._params) {
+  $emitManyParam(eventStr, ..._params) {
     if(!this.eventObj[eventStr]) {
       return
     }

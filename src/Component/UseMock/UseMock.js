@@ -36,6 +36,11 @@ class UseMock extends Component {
     this.promiseHandel()
   }
 
+  /**
+   * @description: async 函数   主要用于第二个请求需要依赖第一个请求的返回值作为参数的时候使用
+   * @param {type} 
+   * @return: 
+   */
   async dataSource() {
     console.log(1)
     await this.$http.get('/mock/goods/getGoodsList').then(res => {

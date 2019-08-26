@@ -22,6 +22,9 @@ class Home extends Component{
           <li>
             <NavLink to='/useMock'>UseMock页面</NavLink>
           </li>
+          <li>
+            <NavLink to='/countAdd'>CountAdd计数器</NavLink>
+          </li>
         </ul>
       </div>
     )
@@ -30,8 +33,8 @@ class Home extends Component{
   componentDidMount() {
     console.log("this.$http:", this.$http)
     
-    this.getMenuList()
-    this.getCityList()
+    // this.getMenuList()
+    // this.getCityList()
   }
   getMenuList() {
     this.$http.post('/foundation/user/func/list', {clientId: 3, queryUserPower: true}).then(res => {
