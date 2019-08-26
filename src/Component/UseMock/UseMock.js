@@ -31,7 +31,14 @@ class UseMock extends Component {
   }
 
   componentDidMount() {
-    this.$http.get('/mock/goods/getGoodsList').then(res => {
+    this.dataSource()
+
+    this.promiseHandel()
+  }
+
+  async dataSource() {
+    console.log(1)
+    await this.$http.get('/mock/goods/getGoodsList').then(res => {
       this.setState({
         tableData: res.dataSource || []
       })
@@ -39,7 +46,7 @@ class UseMock extends Component {
       console.log("err:", err)
     })
 
-    this.$http.post('/mock/user/getUserList').then(res => {
+    await this.$http.post('/mock/user/getUserList').then(res => {
       this.setState({
         userList: res.dataSource || []
       })
@@ -47,6 +54,34 @@ class UseMock extends Component {
       console.log("err:", err)
     })
   }
+
+
+  /**
+   * @description: Promse.all在处理多个异步处理时非常有用，比如说一个页面上需要等两个或多个ajax的数据回来以后才正常显示，在此之前只显示loading图标。
+   * @param {type} 
+   * @return: 
+   */
+  promiseHandel() {
+    console.log(2)
+    let p1 = new Promise((resolve, reject) => {
+      this.$http.get('/mock/goods/getGoodsList').then(res => {
+        resolve(res)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+    let p2 = new Promise((resolve, reject) => {
+      this.$http.get('/mock/user/getUserList').then(res => {
+        resolve(res)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+    Promise.all([p1, p2]).then(res=>{
+      console.log("Promise.all res:", res)
+    }).catch(err=>{})
+  }
+
 }
 
 export default UseMock;
