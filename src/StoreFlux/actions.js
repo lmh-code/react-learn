@@ -3,7 +3,6 @@ import dispatcher from './dispatcher';
 
 const actions = {
   increment () {
-    console.log("来了")
     // 创建动作
     let actions = {
       type: type.INCRMENT
