@@ -1,3 +1,29 @@
 .btn-wrap {
   padding: 6px 20px;
 }
+
+.item-wrap {
+  padding: 6px 10px;
+  border-bottom: 1px solid #ececec;
+  line-height: 36px;
+
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.item-wrap:last-child {
+  border-bottom: 0;
+}
+.is-ok {
+  width: 30px;
+}
+.txt-wrap {
+  flex: 1;
+  margin: 0 20px;
+}
+.delete-btn {
+  width: 50px;
+  text-align: center;
+  cursor: pointer;
+}
