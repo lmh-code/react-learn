@@ -1,7 +1,5 @@
 import { EventEmitter } from 'events';
-import types from './type';
-import dispatcher from './dispatcher';
-const CHANGE_EVENT = 'change';
+import type from './type';
 
 const store = {
   ...EventEmitter.prototype,
@@ -18,6 +16,29 @@ const store = {
   },
   getState () {
     return this.state
+  },
+  addChangeListener (cb) {
+    this.on(type.CHANGE_EVENT, cb)
+  },
+  removeChangeListener (cb) {
+    this.removeListener(type.CHANGE_EVENT, cb)
+  },
+  createItem (data) {
+    // 生成一个随机的id
+    let id = Number.parseInt(Math.random() * 1000000);
+    const todoItem = {
+      id: id,
+      text: data,
+      complete: false
+    };
+    // 前置放入数组
+    this.state.todoList.unshift(todoItem);
+  },
+  deleteItem (_id) {
+    let listTemp = this.state.todoList.filter((item) => {
+      return item.id !== _id
+    })
+    this.state.todoList = listTemp
   }
 }
 export default store 
