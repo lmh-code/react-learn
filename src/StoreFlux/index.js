@@ -14,14 +14,20 @@ const store = {
       { id: 5, text: 'FFFFFFFFFF', complete: true },
     ]
   },
-  getState () {
-    return this.state
+  getState (_val) {
+    return this.state[_val]
   },
   addChangeListener (cb) {
     this.on(type.CHANGE_EVENT, cb)
   },
   removeChangeListener (cb) {
     this.removeListener(type.CHANGE_EVENT, cb)
+  },
+  minCount () {
+    this.state.count = this.state.count - 1
+  },
+  addCount () {
+    this.state.count = this.state.count + 1
   },
   createItem (data) {
     // 生成一个随机的id
@@ -31,7 +37,6 @@ const store = {
       text: data,
       complete: false
     };
-    // 前置放入数组
     this.state.todoList.unshift(todoItem);
   },
   deleteItem (_id) {
@@ -39,6 +44,16 @@ const store = {
       return item.id !== _id
     })
     this.state.todoList = listTemp
+  },
+  changeState (_idx) {
+    this.state.todoList[_idx].complete = !this.state.todoList[_idx].complete
+  },
+  doChooseHandel () {
+    let todoListTemp = this.state.todoList.map((item) => {
+      item.complete = true
+      return item
+    })
+    this.state.todoList = todoListTemp
   }
 }
 export default store 

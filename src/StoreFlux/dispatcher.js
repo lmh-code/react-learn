@@ -15,6 +15,23 @@ dispatcher.register((payload) => {
       store.deleteItem(data.id)
       store.emit(type.CHANGE_EVENT);
     break;
+    case type.ADDCOUNT:
+      store.addCount()
+      store.emit(type.CHANGE_EVENT);
+    break;
+    case type.MINCOUNT:
+      store.minCount()
+      store.emit(type.CHANGE_EVENT);
+    break;
+    case type.CHANGESTATE:
+      store.changeState(data._idx)
+      store.emit(type.CHANGE_EVENT);
+    break;
+    case type.CHOOSEALL:
+      store.doChooseHandel()
+      store.emit(type.CHANGE_EVENT);
+    break;
+    
     default: 
       console.log("11111:")
     break;
