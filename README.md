@@ -72,7 +72,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
 
-## Component中的文件的作用
+## 一、Component中的文件的作用
 
 0. Utils文件夹定义了一些常用工具类
 1. LifeRound  演示的是生命周期
@@ -84,8 +84,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 7. UseMock  mock.js的使用   async...await...函数的使用  Promise.all()的使用
 8. Login  使用公司接口测试了一下自己二次封装的axios的使用（登录）
 
-
-## react中的onClick和html中的onclick区别
+## 二、react中的onClick和html中的onclick区别
 html中的onclick      
 1. html中使用onclick是全局的，容易污染环境
 2. onclick属于一部的，存储在计算机内存中，定义的越多，内存消耗越大，性能越差
@@ -94,7 +93,7 @@ html中的onclick
 1. onClick挂载的每个函数，都可以控制在组件范围内，不会污染全局空间。
 2. 我们在JSX中看到一个组件使用了onClick，但并没有产生直接使用onclick（注意是onclick不是onClick）的HTML，而是使用了事件委托（eventdelegation）的方式处理点击事件，无论有多少个onClick出现，其实最后都只在DOM树上添加了一个事件处理函数，挂在最顶层的DOM节点上。所有的点击事件都被这个事件处理函数捕获，然后根据具体组件分配给特定函数，使用事件委托的性能当然要比为每个onClick都挂载一个事件处理函数要高。
 
-## 理解和使用Promise.all和Promise.race
+## 三、理解和使用Promise.all和Promise.race
 ### 1、Pomise.all的使用
 解释:     
 Promise.all可以将多个Promise实例包装成一个新的Promise实例。同时，成功和失败的返回值是不同的，成功的时候返回的是一个结果数组，而失败的时候则返回最先被reject失败状态的值。     
@@ -147,7 +146,7 @@ Promse.all在处理多个异步处理时非常有用，比如说一个页面上�
   })
 ```
 
-## 理解和使用Promise、generator和async
+## 四、理解和使用Promise、generator和async
 ### 1、promise来读取文件
 代码示例：      
 ```
@@ -288,3 +287,14 @@ finally 语句在 try 和 catch 之后无论有无异常都会执行。
   }
   readByAsync();
 ```
+
+## 五、面向对象
+面向对象最重要的概念就是类（Class）和实例（Instance），必须牢记类是抽象的模板，比如Student类，而实例是根据类创建出来的一个个具体的“对象”，每个对象都拥有相同的方法，但各自的数据可能不同。
+### 1、面向对象都需要先面向过程吗？
+软件开发中面向过程是一定的，程序--过程的有序执行，即所有的程序都是过程
+### 2、javascript中面向对象和组件化有何异同，与模块化又有何异同？
+面向对象主要就是将以前的面向过程的函数的书写方式进行区别，面向对象最重要的就是继承。
+所以：面向过程还是面向对象是指代码的组织方式，而组件化和模块化是指项目中功能的组织方式，所以两者无关。
+### 3、面向对象原型和原型链
+构造函数的原型 和 通过构造函数创建出来的对象的原型链 指向是一样的，都是指向 原型对象。
+原型对象的构造函数 和 通过构造函数创建出来的对象的构造函数 是一样的。

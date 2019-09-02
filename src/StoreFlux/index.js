@@ -15,7 +15,11 @@ const store = {
     ]
   },
   getState (_val) {
-    return this.state[_val]
+    if(_val) {
+      return this.state[_val]
+    }else {
+      return this.state
+    }
   },
   addChangeListener (cb) {
     this.on(type.CHANGE_EVENT, cb)
